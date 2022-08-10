@@ -35,6 +35,10 @@ class engine_db():
                         VALUES ("BBB", "SELL", "10", "100");""")
         cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
                         VALUES ("BBB", "SELL", "10", "101");""")
+        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
+                        VALUES ("BBB", "SELL", "10", "98");""")           
+        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
+                        VALUES ("BBB", "BUY", "20", "110");""")                  
 
         cur.execute("""INSERT INTO tape (symbol, buy_sell, quantity, price) 
                         VALUES ("AAA", "BUY", "10", "100");""")
