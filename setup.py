@@ -17,37 +17,35 @@ class engine_db():
         create_tape = f.read() #.replace('\n', '')
         self.db.execute(create_tape)
 
-    def query(self, string):
+    def fetch_data(self, string):
         cur = self.db.cursor()
         cur.execute(string)
         query_data = cur.fetchall()
         
         return(query_data)
+    
+    def insert_data(self, agent_id, symbol, buy_sell, quantity, price):
+        cur = self.db.cursor()
+        cur.execute("""INSERT INTO tape (agent_id, symbol, buy_sell, quantity, price) 
+                       VALUES (?, ?, ?, ?, ?)""", (agent_id, symbol, buy_sell, quantity, price))
+        self.db.commit()
 
     def test_data(self):
         cur = self.db.cursor()
 
-        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "BUY", "10", "99");""")
-        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "BUY", "10", "100");""")
-        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "SELL", "10", "100");""")
-        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "SELL", "10", "101");""")
-        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "SELL", "10", "98");""")           
-        cur.execute("""INSERT INTO clob (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "BUY", "20", "110");""")                  
+        cur.execute("""INSERT INTO clob (agent_id, symbol, buy_sell, quantity, price) 
+                        VALUES (1, "BBB", "BUY", "10", "99");""")
+        cur.execute("""INSERT INTO clob (agent_id, symbol, buy_sell, quantity, price) 
+                        VALUES (1,"BBB", "BUY", "10", "100");""")
+        cur.execute("""INSERT INTO clob (agent_id, symbol, buy_sell, quantity, price) 
+                        VALUES (2,"BBB", "SELL", "10", "100");""")
+        cur.execute("""INSERT INTO clob (agent_id, symbol, buy_sell, quantity, price) 
+                        VALUES (2,"BBB", "SELL", "15", "101");""")
+        cur.execute("""INSERT INTO clob (agent_id, symbol, buy_sell, quantity, price) 
+                        VALUES (2,"BBB", "SELL", "10", "98");""")           
+        cur.execute("""INSERT INTO clob (agent_id, symbol, buy_sell, quantity, price) 
+                        VALUES (1, "BBB", "BUY", "20", "110");""")                  
 
-        cur.execute("""INSERT INTO tape (symbol, buy_sell, quantity, price) 
-                        VALUES ("AAA", "BUY", "10", "100");""")
-        cur.execute("""INSERT INTO tape (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "BUY", "10", "99");""")
-        cur.execute("""INSERT INTO tape (symbol, buy_sell, quantity, price) 
-                        VALUES ("BBB", "BUY", "10", "100");""")
-
-        
         self.db.commit()
 
     def close(self):
